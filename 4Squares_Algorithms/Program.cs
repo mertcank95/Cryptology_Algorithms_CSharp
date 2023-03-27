@@ -48,7 +48,6 @@ StringBuilder Encrypt(StringBuilder inputEncryptValue)
 
 StringBuilder Decrypt(StringBuilder inputDecryptValue)
 {
-
     var valueDecrypt = Syllable(inputDecryptValue);
     StringBuilder decrypt = new StringBuilder();
     for (int i = 0; i < valueDecrypt.Length; i++)
@@ -88,12 +87,12 @@ string[] Syllable(StringBuilder inputValue)
         Random r = new Random();
         inputValue.Append(alphabet[r.Next(0,alphabet.Length)]);
     }
-    string[] heceler = new string[inputValue.Length / 2 + inputValue.Length % 2];
+    string[] syllables = new string[inputValue.Length / 2 + inputValue.Length % 2];
     for (int i = 0; i < inputValue.Length; i += 2)
     {
-        heceler[i / 2] = inputValue.ToString().Substring(i, 2);
+        syllables[i / 2] = inputValue.ToString().Substring(i, 2);
     }
-    return heceler;
+    return syllables;
 }
 
 char[,] AlphabetMatrixCreated()
