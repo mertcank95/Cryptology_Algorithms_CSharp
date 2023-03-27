@@ -8,7 +8,7 @@ string input = "mertcan kıratlı";
 input = input.Replace(" ", "").ToLower();
 if (string.IsNullOrEmpty(input))
 {
-    Console.WriteLine("error: incorrect entry");
+    Console.WriteLine("error : incorrect entry");
     return;
 }
     
