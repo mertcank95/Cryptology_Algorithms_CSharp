@@ -27,7 +27,6 @@ StringBuilder Encrypt(string inputValue)
     return encryptValue;
 }
 
-
 StringBuilder Decrypt(string encryptValue)
 {
     string value = encryptValue.Replace(" ", "").ToLower();

@@ -1,11 +1,17 @@
 ﻿using System.Text;
 
-
 char[] alphabet = { 'a','b','c','ç','d','e','f','g','ğ','h','ı','i','j','k','l','m',
 'n','o','ö','p','r','s','ş','t','u','ü','v','y','z','x'};
 
-
-string input = "akşamabamyavar";
+Console.WriteLine("text to be encrypted : ");
+string input = Console.ReadLine();
+input = input.Replace(" ", "").ToLower();
+if (string.IsNullOrEmpty(input))
+{
+    Console.WriteLine("error : incorrect entry");
+    return;
+}
+    
 StringBuilder value = new StringBuilder(input);
 
 char[,] alphabetMatrix1 = AlphabetMatrixCreated();
@@ -19,23 +25,40 @@ Console.WriteLine(" ");
 DisplayMatrix(permutationMatrix2, alphabetMatrix2);
 
 
+Console.WriteLine(value);
+var encryptString = Encrypt(value);
+Console.WriteLine(encryptString);
+var decryptString = Decrypt(encryptString);
+Console.WriteLine(decryptString);
 
 
-
-var a = Syllable(value);
-
-Encrypt(a);
-void Encrypt(string[] inputValue)
+StringBuilder Encrypt(StringBuilder inputEncryptValue)
 {
+    var encryptValue = Syllable(inputEncryptValue);
     StringBuilder encrypt= new StringBuilder();
-    for (int i = 0; i < inputValue.Length; i++)
+    for (int i = 0; i < encryptValue.Length; i++)
     {
-         var (firstLetterRow, firstLetterColumn) = SearcIndex(inputValue[i][0], alphabetMatrix1);
-         var (secondtLetterRow, secondLettercolumn) = SearcIndex(inputValue[i][1], alphabetMatrix2);  
+         var (firstLetterRow, firstLetterColumn) = SearcIndex(encryptValue[i][0], alphabetMatrix1);
+         var (secondtLetterRow, secondLettercolumn) = SearcIndex(encryptValue[i][1], alphabetMatrix2);  
          encrypt.Append(permutationMatrix1[firstLetterRow, secondLettercolumn]);
          encrypt.Append(permutationMatrix2[secondtLetterRow, firstLetterColumn]);
     }
-   Console.WriteLine(encrypt);
+    return encrypt;
+}
+
+StringBuilder Decrypt(StringBuilder inputDecryptValue)
+{
+
+    var valueDecrypt = Syllable(inputDecryptValue);
+    StringBuilder decrypt = new StringBuilder();
+    for (int i = 0; i < valueDecrypt.Length; i++)
+    {
+        var (firstLetterRow, firstLetterColumn) = SearcIndex(valueDecrypt[i][0], permutationMatrix1);
+        var (secondtLetterRow, secondLettercolumn) = SearcIndex(valueDecrypt[i][1], permutationMatrix2);
+        decrypt.Append(alphabetMatrix1[firstLetterRow, secondLettercolumn]);
+        decrypt.Append(alphabetMatrix1[secondtLetterRow, firstLetterColumn]);
+    }
+    return decrypt;
 }
 
 
@@ -62,7 +85,8 @@ string[] Syllable(StringBuilder inputValue)
 {
     if (inputValue.Length % 2 == 1)
     { 
-        inputValue.Append('a');
+        Random r = new Random();
+        inputValue.Append(alphabet[r.Next(0,alphabet.Length)]);
     }
     string[] heceler = new string[inputValue.Length / 2 + inputValue.Length % 2];
     for (int i = 0; i < inputValue.Length; i += 2)
