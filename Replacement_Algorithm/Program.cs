@@ -34,12 +34,12 @@ StringBuilder Decrypt(string encryptValue)
     if (string.IsNullOrEmpty(value))
         return new StringBuilder("null cannot be encryptValue");
 
-    StringBuilder dencryptValue = new StringBuilder();
+    StringBuilder decryptValue = new StringBuilder();
     for (int i = 0; i < value.Length; i++)
     {
         int index = Array.IndexOf(replaceAlphabet, value[i]);
         char letter = alphabet[index];
-        dencryptValue.Append(letter);
+        decryptValue.Append(letter);
     }
-    return dencryptValue;
+    return decryptValue;
 }
